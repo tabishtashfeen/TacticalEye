@@ -56,7 +56,39 @@ To recognize your position on the map, you need to train the YOLO model. We've p
    ```
    *(This will connect to `csnades.gg` and output a file named `nades_to_train.json` containing URLs you can use to curate training datasets.)*
 
-### 4. Run the Python Inference Worker
+### 4. Train the Model for AMD GPUs
+
+The provided `train.py` script trains a YOLOv8 nano model on the generated data. To use an AMD GPU, you must configure your environment properly.
+
+#### For Linux (ROCm)
+1. Install PyTorch with ROCm support. Refer to the [PyTorch Get Started](https://pytorch.org/get-started/locally/) page for the command. It usually looks like this:
+   ```bash
+   pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.7
+   ```
+2. Install Ultralytics:
+   ```bash
+   pip install ultralytics
+   ```
+3. Run the training script:
+   ```bash
+   python train.py --train /path/to/train --val /path/to/val --device 0
+   ```
+
+#### For Windows (DirectML)
+1. Install PyTorch and the DirectML plugin:
+   ```bash
+   pip install torch torchvision torchaudio torch-directml
+   ```
+2. Install Ultralytics:
+   ```bash
+   pip install ultralytics
+   ```
+3. Run the training script. Use the `--device dml` argument to utilize DirectML under the hood if supported.
+   ```bash
+   python train.py --train /path/to/train --val /path/to/val --device dml
+   ```
+
+### 5. Run the Python Inference Worker
 Once your YOLO model is trained (`radar_yolov8n.pt`) and placed in a `models/` directory, you can start the screen capture worker.
 
 1. Install the required Python CV and inference libraries:
