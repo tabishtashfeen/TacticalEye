@@ -1,12 +1,27 @@
 import mss
 import cv2
 import numpy as np
+import os
 import requests
+import sys
 import time
 from ultralytics import YOLO
 
+# Resolve the model path relative to this script so the worker can start from the repo root.
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(SCRIPT_DIR, "models", "radar_yolov8n.pt")
+
+if not os.path.isdir(os.path.dirname(MODEL_PATH)):
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+
+if not os.path.isfile(MODEL_PATH):
+    print(f"[TacticalEye] ERROR: YOLO model not found at {MODEL_PATH}")
+    print("Place a trained radar_yolov8n.pt file in the models/ directory.")
+    print("See README.md for training and model placement instructions.")
+    sys.exit(1)
+
 # Initialize YOLO model configured for AMD ROCm / DirectML execution providers
-model = YOLO("models/radar_yolov8n.pt")
+model = YOLO(MODEL_PATH)
 
 # Bounding box coordinates for a standard 1080p resolution CS2 minimap
 # Adjust matching your in-game safezone / HUD scale settings

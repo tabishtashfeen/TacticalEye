@@ -52,7 +52,7 @@ To recognize your position on the map, you need to train the YOLO model. We've p
    ```
 3. Run the scraper script:
    ```bash
-   python scrape_nades.py
+   py scrape_nades.py
    ```
    *(This will connect to `csnades.gg` and output a file named `nades_to_train.json` containing URLs you can use to curate training datasets.)*
 
@@ -65,6 +65,6 @@ Once your YOLO model is trained (`radar_yolov8n.pt`) and placed in a `models/` d
    ```
 2. Run the worker script:
    ```bash
-   python vision_worker.py
+   py vision_worker.py
    ```
    *(The worker will continuously grab the minimap area of your screen, infer your X/Y coordinates, and send them to the .NET backend for lineup correlation.)*
