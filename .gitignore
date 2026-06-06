@@ -1,0 +1,8 @@
+node_modules/
+bin/
+obj/
+TacticalEye.Api/TacticalEye.Api/bin/
+TacticalEye.Api/TacticalEye.Api/obj/
+**/node_modules/
+**/bin/
+**/obj/

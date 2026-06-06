@@ -1,0 +1,32 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+- stage: BuildAndTest
+  jobs:
+  - job: CompiledBackends
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '8.x'
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'Compile Central .NET 8 App Infrastructure Engine'
+    - script: dotnet test --configuration $(buildConfiguration)
+      displayName: 'Execute Proximity Evaluation Math Unit Verification'
+
+  - job: VerifyWebDashboard
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+    - script: |
+        npm install
+        npm run build
+      displayName: 'Validate React Deployment Integrity'
