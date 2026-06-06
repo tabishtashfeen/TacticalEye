@@ -7,3 +7,6 @@ TacticalEye.Api/TacticalEye.Api/obj/
 **/bin/
 **/obj/
 nades_to_train.json
+
+__pycache__/
+*.pyc
